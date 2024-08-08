@@ -25,13 +25,13 @@ namespace CliniqonFindFriendsAppDataAccess.Repository
         }
         public async Task<string?> RegisterUser(UserRegistrationParam userRegistrationParam, string hashedPassword)
         {
-
+            DateTimeOffset dtoF = new DateTimeOffset(userRegistrationParam.DateOfBirth);
             DynamicParameters dp = new DynamicParameters();
             dp.Add("@Name", userRegistrationParam.Name);
             dp.Add("@UserName", userRegistrationParam.Username);
             dp.Add("@Email", userRegistrationParam.Email);
             dp.Add("@Password", hashedPassword);
-            dp.Add("@DateOfBirth", userRegistrationParam.DateOfBirth);
+            dp.Add("@DateOfBirth", dtoF.ToUnixTimeSeconds());
             dp.Add("@Designation", userRegistrationParam.Designation);
             dp.Add("@Gender", userRegistrationParam.Gender);
             dp.Add("@ProfilePicture", userRegistrationParam.ProfilePicture);

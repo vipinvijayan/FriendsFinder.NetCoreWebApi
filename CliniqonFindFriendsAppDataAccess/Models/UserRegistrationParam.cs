@@ -16,13 +16,13 @@ namespace CliniqonFindFriendsAppDataAccess.Models
         public string? Username { get; set; }
         public string? Email { get; set; }
         public string? Password { get; set; }
-        public long DateOfBirth { get; set; }
+        public DateTime DateOfBirth { get; set; }
         public string? Designation { get; set; }
         public string? Gender { get; set; }
         public string? ProfilePicture { get; set; }
         public string? Country { get; set; }
         public string? FavoriteColor { get; set; }
         public string? FavoriteActor { get; set; }
-        
+
     }
 }
