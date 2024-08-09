@@ -1,53 +1,4 @@
-/****** Object:  Database [CliniqonFindFriendsDB]    Script Date: 2024-08-08 18:12:59 ******/
-CREATE DATABASE [CliniqonFindFriendsDB]  (EDITION = 'GeneralPurpose', SERVICE_OBJECTIVE = 'GP_S_Gen5_1', MAXSIZE = 32 GB) WITH CATALOG_COLLATION = SQL_Latin1_General_CP1_CI_AS, LEDGER = OFF;
-GO
-ALTER DATABASE [CliniqonFindFriendsDB] SET COMPATIBILITY_LEVEL = 160
-GO
-ALTER DATABASE [CliniqonFindFriendsDB] SET ANSI_NULL_DEFAULT OFF 
-GO
-ALTER DATABASE [CliniqonFindFriendsDB] SET ANSI_NULLS OFF 
-GO
-ALTER DATABASE [CliniqonFindFriendsDB] SET ANSI_PADDING OFF 
-GO
-ALTER DATABASE [CliniqonFindFriendsDB] SET ANSI_WARNINGS OFF 
-GO
-ALTER DATABASE [CliniqonFindFriendsDB] SET ARITHABORT OFF 
-GO
-ALTER DATABASE [CliniqonFindFriendsDB] SET AUTO_SHRINK OFF 
-GO
-ALTER DATABASE [CliniqonFindFriendsDB] SET AUTO_UPDATE_STATISTICS ON 
-GO
-ALTER DATABASE [CliniqonFindFriendsDB] SET CURSOR_CLOSE_ON_COMMIT OFF 
-GO
-ALTER DATABASE [CliniqonFindFriendsDB] SET CONCAT_NULL_YIELDS_NULL OFF 
-GO
-ALTER DATABASE [CliniqonFindFriendsDB] SET NUMERIC_ROUNDABORT OFF 
-GO
-ALTER DATABASE [CliniqonFindFriendsDB] SET QUOTED_IDENTIFIER OFF 
-GO
-ALTER DATABASE [CliniqonFindFriendsDB] SET RECURSIVE_TRIGGERS OFF 
-GO
-ALTER DATABASE [CliniqonFindFriendsDB] SET AUTO_UPDATE_STATISTICS_ASYNC OFF 
-GO
-ALTER DATABASE [CliniqonFindFriendsDB] SET ALLOW_SNAPSHOT_ISOLATION ON 
-GO
-ALTER DATABASE [CliniqonFindFriendsDB] SET PARAMETERIZATION SIMPLE 
-GO
-ALTER DATABASE [CliniqonFindFriendsDB] SET READ_COMMITTED_SNAPSHOT ON 
-GO
-ALTER DATABASE [CliniqonFindFriendsDB] SET  MULTI_USER 
-GO
-ALTER DATABASE [CliniqonFindFriendsDB] SET ENCRYPTION ON
-GO
-ALTER DATABASE [CliniqonFindFriendsDB] SET QUERY_STORE = ON
-GO
-ALTER DATABASE [CliniqonFindFriendsDB] SET QUERY_STORE (OPERATION_MODE = READ_WRITE, CLEANUP_POLICY = (STALE_QUERY_THRESHOLD_DAYS = 30), DATA_FLUSH_INTERVAL_SECONDS = 900, INTERVAL_LENGTH_MINUTES = 60, MAX_STORAGE_SIZE_MB = 100, QUERY_CAPTURE_MODE = AUTO, SIZE_BASED_CLEANUP_MODE = AUTO, MAX_PLANS_PER_QUERY = 200, WAIT_STATS_CAPTURE_MODE = ON)
-GO
-/*** The scripts of database scoped configurations in Azure should be executed inside the target database connection. ***/
-GO
--- ALTER DATABASE SCOPED CONFIGURATION SET MAXDOP = 8;
-GO
-/****** Object:  Table [dbo].[CompanyFriends]    Script Date: 2024-08-08 18:12:59 ******/
+/****** Object:  Table [dbo].[CompanyFriends]    Script Date: 2024-08-09 13:56:23 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -69,7 +20,7 @@ CREATE TABLE [dbo].[CompanyFriends](
 )WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[CompanyUsersData]    Script Date: 2024-08-08 18:12:59 ******/
+/****** Object:  Table [dbo].[CompanyUsersData]    Script Date: 2024-08-09 13:56:23 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -97,7 +48,7 @@ CREATE TABLE [dbo].[CompanyUsersData](
 )WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  View [dbo].[CompanyFriendsProfileView]    Script Date: 2024-08-08 18:12:59 ******/
+/****** Object:  View [dbo].[CompanyFriendsProfileView]    Script Date: 2024-08-09 13:56:23 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -111,7 +62,7 @@ FROM   dbo.CompanyUsersData LEFT OUTER JOIN
            dbo.CompanyFriends ON dbo.CompanyUsersData.Id = dbo.CompanyFriends.FriendId
 WHERE (dbo.CompanyFriends.IsDeleted = 0) AND (dbo.CompanyUsersData.IsDeleted = 0) AND (dbo.CompanyFriends.IsActive = 1) AND (dbo.CompanyUsersData.IsActive = 1) AND (dbo.CompanyUsersData.Gender = 'Male') AND (dbo.CompanyUsersData.FavoriteColor LIKE '%%') AND (dbo.CompanyUsersData.FavoriteActor LIKE '%%')
 GO
-/****** Object:  Table [dbo].[ErrorLog]    Script Date: 2024-08-08 18:12:59 ******/
+/****** Object:  Table [dbo].[ErrorLog]    Script Date: 2024-08-09 13:56:23 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -130,7 +81,7 @@ CREATE TABLE [dbo].[ErrorLog](
 )WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[RefreshTokenData]    Script Date: 2024-08-08 18:12:59 ******/
+/****** Object:  Table [dbo].[RefreshTokenData]    Script Date: 2024-08-09 13:56:23 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -151,7 +102,7 @@ CREATE TABLE [dbo].[RefreshTokenData](
 )WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[UserLogin]    Script Date: 2024-08-08 18:12:59 ******/
+/****** Object:  Table [dbo].[UserLogin]    Script Date: 2024-08-09 13:56:23 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -209,7 +160,7 @@ REFERENCES [dbo].[CompanyUsersData] ([Id])
 GO
 ALTER TABLE [dbo].[UserLogin] CHECK CONSTRAINT [FK_UserLogin_CompanyUsersData]
 GO
-/****** Object:  StoredProcedure [dbo].[GetProfilesByProfileMatchPercentage]    Script Date: 2024-08-08 18:12:59 ******/
+/****** Object:  StoredProcedure [dbo].[GetProfilesByProfileMatchPercentage]    Script Date: 2024-08-09 13:56:23 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -276,7 +227,7 @@ Drop Table #TempUserProfiles;
 End
 
 GO
-/****** Object:  StoredProcedure [dbo].[SaveCompanyFriendsData]    Script Date: 2024-08-08 18:12:59 ******/
+/****** Object:  StoredProcedure [dbo].[SaveCompanyFriendsData]    Script Date: 2024-08-09 13:56:23 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -288,11 +239,15 @@ CREATE Procedure [dbo].[SaveCompanyFriendsData](
 )
 As
 Begin
-	Declare @CurrentUnixDatetime bigint;
-	set @CurrentUnixDatetime=(SELECT DATEDIFF(SECOND, '1970-01-01', GETUTCDATE()));
-
-	Begin TRY
+	Declare @CurrentUnixDatetime bigint;Declare @AlreadyCount int;
 	
+	set @CurrentUnixDatetime=(SELECT DATEDIFF(SECOND, '1970-01-01', GETUTCDATE()));
+	
+	Begin TRY
+	set @AlreadyCount=(select count(Id) from [CompanyFriends] where [CompanyFriends].FriendId=@FriendId 
+	and [CompanyFriends].UserId=@UserId and [CompanyFriends].IsActive=1 and IsDeleted=0);
+	if(@AlreadyCount<0)
+	Begin
 		Declare @ReturnMessage varchar(10),@CompanyUserId int,@ProfileMatchPercentage float;
 	
 	
@@ -319,7 +274,9 @@ Begin
 		VALUES(@UserId,@FriendId,@CreatedBy,@CurrentUnixDatetime,@ProfileMatchPercentage);
 		set @ReturnMessage='Success';
 	
-			
+	End
+	Else
+		set @ReturnMessage='Already';
 	End TRY
     Begin CATCH
 	
@@ -337,7 +294,7 @@ Begin
 END;
 select @ReturnMessage;
 GO
-/****** Object:  StoredProcedure [dbo].[SaveCompanyUserData]    Script Date: 2024-08-08 18:12:59 ******/
+/****** Object:  StoredProcedure [dbo].[SaveCompanyUserData]    Script Date: 2024-08-09 13:56:23 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -410,7 +367,7 @@ Begin
 END;
 select @ReturnMessage;
 GO
-/****** Object:  StoredProcedure [dbo].[SaveRefreshToken]    Script Date: 2024-08-08 18:12:59 ******/
+/****** Object:  StoredProcedure [dbo].[SaveRefreshToken]    Script Date: 2024-08-09 13:56:23 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -452,6 +409,4 @@ GO
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Male.Female,Not Want to Specify' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'CompanyUsersData', @level2type=N'COLUMN',@level2name=N'Gender'
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Stored Procedure or Backend API ' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'ErrorLog', @level2type=N'COLUMN',@level2name=N'ErrorComingFrom'
-GO
-ALTER DATABASE [CliniqonFindFriendsDB] SET  READ_WRITE 
 GO
