@@ -31,6 +31,7 @@ namespace DrCleanerAppWebApis.Controllers
         }
 
         #region API Call
+
         /// <summary>
         /// This api used to login using their credentials
         /// </summary>
@@ -46,7 +47,7 @@ namespace DrCleanerAppWebApis.Controllers
                 {
                     string userAgent = Request.Headers["User-Agent"].ToString();
                     //Calling login method
-                    UserProfileModel? userProfileModel = await loginCall(userLginParam.Username, userLginParam.Password, userAgent);
+                    UserProfileModel? userProfileModel = await loginCall(userLginParam.Username, userLginParam.Password);
                     if (userProfileModel != null)
                     {
 
@@ -127,7 +128,7 @@ namespace DrCleanerAppWebApis.Controllers
                     if (result == GeneralDTO.SuccessMessage)
                     {
                         //Calling login method
-                        UserProfileModel? userProfileModel = await loginCall(userRegistrationParam.Username, userRegistrationParam.Password, userAgent);
+                        UserProfileModel? userProfileModel = await loginCall(userRegistrationParam.Username, userRegistrationParam.Password);
                         if (userProfileModel != null)
                         {
                             //if login success creating jwttoken
@@ -186,6 +187,7 @@ namespace DrCleanerAppWebApis.Controllers
                 return Ok(responseObj);
             }
         }
+
         /// <summary>
         /// Deleting all user tokens from Database
         /// </summary>
@@ -238,6 +240,10 @@ namespace DrCleanerAppWebApis.Controllers
             }
         }
 
+        /// <summary>
+        /// Getting the new Access token if the refresh token has validity and access token validity expired
+        /// </summary>
+        /// <returns></returns>
         [AllowAnonymous]
         [HttpPost]
         [Route("user/refreshtoken")]
@@ -282,7 +288,11 @@ namespace DrCleanerAppWebApis.Controllers
             return Ok(responseObj);
         }
 
-
+        /// <summary>
+        /// Getting the User Details by User Id
+        /// </summary>
+        /// <param name="idParam"></param>
+        /// <returns></returns>
         [HttpPost, Route("user/getuserdetails")]
         [Authorize]
         public async Task<IActionResult> GetUserDetails(IdParam idParam)
@@ -330,6 +340,11 @@ namespace DrCleanerAppWebApis.Controllers
             }
         }
 
+        /// <summary>
+        /// Get the users on the company except the current user
+        /// </summary>
+        /// <param name="idParam"></param>
+        /// <returns></returns>
         [HttpPost, Route("user/getallothercompanyusers")]
         [Authorize]
         public async Task<IActionResult> GetAllOtherCompanyUsers(IdParam idParam)
@@ -376,6 +391,12 @@ namespace DrCleanerAppWebApis.Controllers
                 return Ok(responseObj);
             }
         }
+
+        /// <summary>
+        /// Saving the user to friends list
+        /// </summary>
+        /// <param name="companyFriendModelParam"></param>
+        /// <returns></returns>
         [HttpPost, Route("user/savecompanyfriendsdata")]
         [Authorize]
         public async Task<IActionResult> SaveCompanyFriendsData(CompanyFriendModel companyFriendModelParam)
@@ -423,7 +444,11 @@ namespace DrCleanerAppWebApis.Controllers
             }
         }
 
-
+        /// <summary>
+        /// Get all the friends connected
+        /// </summary>
+        /// <param name="searchParam"></param>
+        /// <returns></returns>
         [HttpPost, Route("user/getallcompanyfriends")]
         [Authorize]
         public async Task<IActionResult> GetAllCompanyFriends(SearchParam searchParam)
@@ -470,6 +495,12 @@ namespace DrCleanerAppWebApis.Controllers
                 return Ok(responseObj);
             }
         }
+
+        /// <summary>
+        /// Get all the profile matched friends
+        /// </summary>
+        /// <param name="idParam"></param>
+        /// <returns></returns>
         [HttpPost, Route("user/getallcompanyfriendsbymatch")]
         [Authorize]
         public async Task<IActionResult> GetAllCompanyFriendsByMatch(IdParam idParam)
@@ -517,6 +548,11 @@ namespace DrCleanerAppWebApis.Controllers
             }
         }
 
+        /// <summary>
+        /// Get all the users which profile matched greater than 50%
+        /// </summary>
+        /// <param name="idParam"></param>
+        /// <returns></returns>
         [HttpPost, Route("user/getprofilesbymatchpercentage")]
         [Authorize]
         public async Task<IActionResult> GetProfilesByProfileMatchPercentage(IdParam idParam)
@@ -563,6 +599,12 @@ namespace DrCleanerAppWebApis.Controllers
                 return Ok(responseObj);
             }
         }
+
+        /// <summary>
+        /// File Upload for profile picture
+        /// </summary>
+        /// <param name="parms"></param>
+        /// <returns></returns>
         [HttpPost, Route("user/uploadfile")]
         [Authorize]
         public async Task<IActionResult> UploadFile([FromBody] UploadImageParam parms)
@@ -600,10 +642,8 @@ namespace DrCleanerAppWebApis.Controllers
         #endregion
 
 
-
-
-
         #region Private Methods
+
         /// <summary>
         /// Getting the Ip Address from the request
         /// </summary>
@@ -616,6 +656,7 @@ namespace DrCleanerAppWebApis.Controllers
             else
                 return HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
         }
+
         /// <summary>
         /// Setting refresh token to into Cookie
         /// </summary>
@@ -642,7 +683,8 @@ namespace DrCleanerAppWebApis.Controllers
         /// <param name="password"></param>
         /// <param name="userAgent"></param>
         /// <returns>UserProfileModel</returns>
-        private async Task<UserProfileModel?> loginCall(string username, string password, string userAgent)
+        /// 
+        private async Task<UserProfileModel?> loginCall(string username, string password)
         {
             var saltKey = _configuration.GetSection("AppSettings").GetValue<string>("SaltKey");
             //if user registration is success the try login with the credentials
@@ -667,6 +709,11 @@ namespace DrCleanerAppWebApis.Controllers
                 return HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
         }
 
+        /// <summary>
+        /// Getting Random Numbers by provided length
+        /// </summary>
+        /// <param name="length"></param>
+        /// <returns></returns>
         private string GetRandomNumbers(int length)
         {
             string[] saAllowedCharacters = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "0" };
@@ -689,6 +736,15 @@ namespace DrCleanerAppWebApis.Controllers
 
             return sOTP;
         }
+
+        /// <summary>
+        /// Saving File to Folder
+        /// </summary>
+        /// <param name="ImgStr"></param>
+        /// <param name="ImgName"></param>
+        /// <param name="Extention"></param>
+        /// <param name="ImageType"></param>
+        /// <returns></returns>
         private async Task<string> SaveFile(string ImgStr, string ImgName, string Extention, string ImageType)
         {
             string path = _configuration.GetSection("AppSettings").GetValue<string>("FileUploadLocation");
