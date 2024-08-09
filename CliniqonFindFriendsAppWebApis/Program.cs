@@ -81,7 +81,7 @@ string dbConnectionString = builder.Configuration.GetConnectionString("AppConnec
 builder.Services.AddTransient<IDbConnection>(sql => new SqlConnection(dbConnectionString));
 
 builder.Services.AddRepositoryDependencies(); //Repository Layer Injection
-builder.Services.AddScoped<IPasswordB, PasswordB>();
+builder.Services.AddScoped<IPasswordB, PasswordB>();// Custom Buisiness layer injection
 builder.Services.AddScoped<IUserB, UserB>();// Custom Buisiness layer injection
 builder.Services.AddSingleton<ISecurityB, SecurityB>();// Custom Buisiness layer injection using add singleton to use in custom middleware for token status check from DB
 builder.Services.AddHttpClient();
